@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THREADS — Premium Fashion Store</title>
+
+    <style>
+        /* =========================
+           RESET & GLOBAL STYLES
+        ========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #111111;
+            --secondary: #f4f1ec;
+            --accent: #c89b5c;
+            --white: #ffffff;
+            --gray: #666;
+            --light-gray: #eeeeee;
+            --danger: #d9534f;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--primary);
+            background: var(--white);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header span {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-top: 8px;
+        }
+
+        .section-header p {
+            max-width: 600px;
+            margin: 12px auto 0;
+            color: var(--gray);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border: none;
+            background: var(--primary);
+            color: var(--white);
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #eee;
+        }
+
+        .navbar {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .cart {
+            position: relative;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -12px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            color: white;
+            font-size: 11px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 28px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            min-height: 100vh;
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.4),
+                    rgba(0, 0, 0, 0.4)
+                ),
+                url("https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1800&q=85")
+                center/cover no-repeat;
+
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            padding-top: 75px;
+        }
+
+        .hero-content span {
+            color: #f0c98e;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            line-height: 0.95;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+
+        .hero-content p {
+            max-width: 500px;
+            margin-bottom: 30px;
+            color: #eee;
+            font-size: 17px;
+        }
+
+        .hero .btn {
+            background: white;
+            color: #111;
+        }
+
+        .hero .btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* =========================
+           CATEGORIES
+        ========================== */
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .category {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .category img {
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s ease;
+        }
+
+        .category:hover img {
+            transform: scale(1.08);
+        }
+
+        .category-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 30px;
+            background: linear-gradient(
+                transparent,
+                rgba(0, 0, 0, 0.75)
+            );
+            color: white;
+        }
+
+        .category-overlay h3 {
+            font-size: 28px;
+        }
+
+        /* =========================
+           PRODUCTS
+        ========================== */
+
+        .products {
+            background: var(--secondary);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            position: relative;
+            transition: 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .product-image {
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary);
+            color: white;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-info h3 {
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+
+        .product-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .product-bottom {
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .add-btn {
+            border: none;
+            background: var(--primary);
+            color: white;
+            padding: 9px 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            background: var(--accent);
+        }
+
+        /* =========================
+           ABOUT
+        ========================== */
+
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .about-image {
+            height: 550px;
+        }
+
+        .about-image img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-text span {
+            color: var(--accent);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 13px;
+        }
+
+        .about-text h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.1;
+            margin: 15px 0 20px;
+        }
+
+        .about-text p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        /* =========================
+           ORDER FORM
+        ========================== */
+
+        .order-section {
+            background: #111;
+            color: white;
+        }
+
+        .order-wrapper {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .order-intro h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.1;
+            margin: 15px 0;
+        }
+
+        .order-intro span {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .order-intro p {
+            color: #aaa;
+            margin-bottom: 25px;
+        }
+
+        .order-details {
+            list-style: none;
+            color: #ccc;
+        }
+
+        .order-details li {
+            margin: 12px 0;
+        }
+
+        .order-form {
+            background: white;
+            color: #111;
+            padding: 35px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            outline: none;
+            background: #fafafa;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--accent);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .order-form .btn {
+            width: 100%;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            background: #080808;
+            color: white;
+            padding: 50px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        footer p,
+        footer a {
+            color: #999;
+            font-size: 14px;
+        }
+
+        footer h4 {
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            border-top: 1px solid #222;
+            padding-top: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* =========================
+           TOAST
+        ========================== */
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            background: #111;
+            color: white;
+            padding: 15px 22px;
+            z-index: 2000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.4s;
+            border-left: 4px solid var(--accent);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 900px) {
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+            }
+
+            .category {
+                height: 300px;
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about-image {
+                height: 450px;
+            }
+
+            .order-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: 65px;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: 0.4s;
+                border-bottom: 1px solid #eee;
+            }
+
+            .nav-links.active {
+                max-height: 400px;
+            }
+
+            .nav-links li {
+                padding: 15px 5%;
+                border-bottom: 1px solid #eee;
+            }
+
+            .cart {
+                margin-left: auto;
+                margin-right: 20px;
+            }
+
+            .hero {
+                min-height: 90vh;
+            }
+
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .section {
+                padding: 65px 0;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-image {
+                height: 420px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .order-form {
+                padding: 25px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .product-image {
+                height: 380px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+        <div class="container navbar">
+
+            <a href="#home" class="logo">
+                THREAD<span>S</span>
+            </a>
+
+            <button class="menu-btn" id="menuBtn">
+                ☰
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#order">Order</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div class="cart">
+                🛍️
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero" id="home">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <span>New Collection 2026</span>
+
+                <h1>
+                    Dress<br>
+                    Your<br>
+                    Story.
+                </h1>
+
+                <p>
+                    Discover premium clothing designed for people
+                    who want to look confident, stylish and effortlessly
+                    different.
+                </p>
+
+                <a href="#shop" class="btn">
+                    Shop Collection
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================== -->
+
+    <section class="section" id="categories">
+
+        <div class="container">
+
+            <div class="section-header">
+                <span>Explore</span>
+                <h2>Shop By Category</h2>
+                <p>
+                    Find your perfect style from our carefully selected
+                    collections.
+                </p>
+            </div>
+
+            <div class="categories">
+
+                <a href="#shop" class="category">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80"
+                        alt="Women's fashion"
+                    >
+
+                    <div class="category-overlay">
+                        <h3>Women</h3>
+                    </div>
+
+                </a>
+
+                <a href="#shop" class="category">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80"
+                        alt="Men's fashion"
+                    >
+
+                    <div class="category-overlay">
+                        <h3>Men</h3>
+                    </div>
+
+                </a>
+
+                <a href="#shop" class="category">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=80"
+                        alt="Accessories"
+                    >
+
+                    <div class="category-overlay">
+                        <h3>Accessories</h3>
+                    </div>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PRODUCTS
+    ========================== -->
+
+    <section class="section products" id="shop">
+
+        <div class="container">
+
+            <div class="section-header">
+                <span>Our Collection</span>
+                <h2>Featured Pieces</h2>
+                <p>
+                    Timeless pieces made for your everyday lifestyle.
+                </p>
+            </div>
+
+            <div class="product-grid">
+
+                <!-- Product 1 -->
+
+                <div class="product-card">
+
+                    <div class="product-image">
+
+                        <span class="product-badge">
+                            NEW
+                        </span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=80"
+                            alt="Leather jacket"
+                        >
+
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>Classic Leather Jacket</h3>
+
+                        <p>
+                            Premium leather outerwear
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <span class="price">
+                                ₦85,000
+                            </span>
+
+                            <button
+                                class="add-btn"
+                                data-product="Classic Leather Jacket"
+                                data-price="85000"
+                            >
+                                Add +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Product 2 -->
+
+                <div class="product-card">
+
+                    <div class="product-image">
+
+                        <span class="product-badge">
+                            HOT
+                        </span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&q=80"
+                            alt="Elegant dress"
+                        >
+
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>Elegant Evening Dress</h3>
+
+                        <p>
+                            Modern premium fit
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <span class="price">
+                                ₦65,000
+                            </span>
+
+                            <button
+                                class="add-btn"
+                                data-product="Elegant Evening Dress"
+                                data-price="65000"
+                            >
+                                Add +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Product 3 -->
+
+                <div class="product-card">
+
+                    <div class="product-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80"
+                            alt="White t-shirt"
+                        >
+
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>Premium Cotton Tee</h3>
+
+                        <p>
+                            100% heavyweight cotton
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <span class="price">
+                                ₦25,000
+                            </span>
+
+                            <button
+                                class="add-btn"
+                                data-product="Premium Cotton Tee"
+                                data-price="25000"
+                            >
+                                Add +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Product 4 -->
+
+                <div class="product-card">
+
+                    <div class="product-image">
+
+                        <span class="product-badge">
+                            SALE
+                        </span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=700&q=80"
+                            alt="Casual jacket"
+                        >
+
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>Urban Overshirt</h3>
+
+                        <p>
+                            Relaxed everyday style
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <span class="price">
+                                ₦38,000
+                            </span>
+
+                            <button
+                                class="add-btn"
+                                data-product="Urban Overshirt"
+                                data-price="38000"
+                            >
+                                Add +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section class="section" id="about">
+
+        <div class="container">
+
+            <div class="about">
+
+                <div class="about-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1000&q=80"
+                        alt="Fashion collection"
+                    >
+
+                </div>
+
+                <div class="about-text">
+
+                    <span>Our Story</span>
+
+                    <h2>
+                        Fashion made for
+                        real life.
+                    </h2>
+
+                    <p>
+                        THREADS was created with one simple idea:
+                        clothing should make you feel confident.
+                    </p>
+
+                    <p>
+                        We combine modern designs, quality fabrics
+                        and timeless styles to create pieces you will
+                        want to wear again and again.
+                    </p>
+
+                    <a href="#order" class="btn">
+                        Place An Order
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ORDER SECTION
+    ========================== -->
+
+    <section class="section order-section" id="order">
+
+        <div class="container">
+
+            <div class="order-wrapper">
+
+                <div class="order-intro">
+
+                    <span>Place Your Order</span>
+
+                    <h2>
+                        Get your
+                        favorite look.
+                    </h2>
+
+                    <p>
+                        Fill out the form and our team will contact
+                        you to confirm your order, size, delivery
+                        location and payment details.
+                    </p>
+
+                    <ul class="order-details">
+
+                        <li>✓ Nationwide delivery available</li>
+                        <li>✓ Multiple sizes available</li>
+                        <li>✓ Quality checked before dispatch</li>
+                        <li>✓ Customer support available</li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- ORDER FORM -->
+
+                <form class="order-form" id="orderForm">
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="name">
+                                Full Name *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="John Doe"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="phone">
+                                Phone Number *
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="08012345678"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                        >
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="product">
+                                Product *
+                            </label>
+
+                            <select id="product" name="product" required>
+
+                                <option value="">
+                                    Select a product
+                                </option>
+
+                                <option value="Classic Leather Jacket">
+                                    Classic Leather Jacket — ₦85,000
+                                </option>
+
+                                <option value="Elegant Evening Dress">
+                                    Elegant Evening Dress — ₦65,000
+                                </option>
+
+                                <option value="Premium Cotton Tee">
+                                    Premium Cotton Tee — ₦25,000
+                                </option>
+
+                                <option value="Urban Overshirt">
+                                    Urban Overshirt — ₦38,000
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="size">
+                                Size *
+                            </label>
+
+                            <select id="size" name="size" required>
+
+                                <option value="">
+                                    Select size
+                                </option>
+
+                                <option>XS</option>
+                                <option>S</option>
+                                <option>M</option>
+                                <option>L</option>
+                                <option>XL</option>
+                                <option>XXL</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="quantity">
+                                Quantity *
+                            </label>
+
+                            <input
+                                type="number"
+                                id="quantity"
+                                name="quantity"
+                                min="1"
+                                value="1"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="color">
+                                Preferred Color
+                            </label>
+
+                            <input
+                                type="text"
+                                id="color"
+                                name="color"
+                                placeholder="Black"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="address">
+                            Delivery Address *
+                        </label>
+
+                        <textarea
+                            id="address"
+                            name="address"
+                            placeholder="Enter your full delivery address..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="message">
+                            Additional Message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="Any special instructions?"
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Submit Order
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section class="section" id="contact">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <span>Contact Us</span>
+
+                <h2>
+                    Let's Talk Fashion
+                </h2>
+
+                <p>
+                    Have questions about our products or orders?
+                    Our team is ready to help.
+                </p>
+
+            </div>
+
+            <div style="
+                text-align:center;
+                display:flex;
+                justify-content:center;
+                gap:40px;
+                flex-wrap:wrap;
+            ">
+
+                <div>
+                    <strong>Phone</strong>
+                    <p>+234 801 234 5678</p>
+                </div>
+
+                <div>
+                    <strong>Email</strong>
+                    <p>hello@threads.com</p>
+                </div>
+
+                <div>
+                    <strong>Location</strong>
+                    <p>Lagos, Nigeria</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div>
+
+                    <div class="footer-logo">
+                        THREADS
+                    </div>
+
+                    <p>
+                        Premium fashion for people who
+                        want to dress with confidence.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h4>Shop</h4>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="#shop">New Arrivals</a>
+                        </li>
+
+                        <li>
+                            <a href="#shop">Men</a>
+                        </li>
+
+                        <li>
+                            <a href="#shop">Women</a>
+                        </li>
+
+                        <li>
+                            <a href="#shop">Accessories</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div>
+
+                    <h4>Company</h4>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="#about">About Us</a>
+                        </li>
+
+                        <li>
+                            <a href="#contact">Contact</a>
+                        </li>
+
+                        <li>
+                            <a href="#order">Order</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div>
+
+                    <h4>Follow Us</h4>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="#">Instagram</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Facebook</a>
+                        </li>
+
+                        <li>
+                            <a href="#">TikTok</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <div class="copyright">
+
+                © <span id="year"></span> THREADS.
+                All rights reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- TOAST NOTIFICATION -->
+
+    <div class="toast" id="toast">
+        Added to your order!
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* =========================
+           MOBILE MENU
+        ========================== */
+
+        const menuBtn = document.getElementById("menuBtn");
+        const navLinks = document.getElementById("navLinks");
+
+        menuBtn.addEventListener("click", () => {
+
+            navLinks.classList.toggle("active");
+
+            menuBtn.textContent =
+                navLinks.classList.contains("active")
+                ? "✕"
+                : "☰";
+
+        });
+
+
+        // Close mobile menu when a link is clicked
+
+        document.querySelectorAll(".nav-links a").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                navLinks.classList.remove("active");
+
+                menuBtn.textContent = "☰";
+
+            });
+
+        });
+
+
+        /* =========================
+           CART
+        ========================== */
+
+        let cartCount = 0;
+
+        const cartCounter =
+            document.getElementById("cartCount");
+
+        const toast =
+            document.getElementById("toast");
+
+
+        document.querySelectorAll(".add-btn").forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const product =
+                    button.dataset.product;
+
+                cartCount++;
+
+                cartCounter.textContent =
+                    cartCount;
+
+                showToast(
+                    product + " added to your order!"
+                );
+
+                // Automatically select product
+                // in the order form
+
+                const productSelect =
+                    document.getElementById("product");
+
+                productSelect.value = product;
+
+                document
+                    .getElementById("order")
+                    .scrollIntoView({
+                        behavior: "smooth"
+                    });
+
+            });
+
+        });
+
+
+        /* =========================
+           TOAST
+        ========================== */
+
+        let toastTimer;
+
+        function showToast(message) {
+
+            toast.textContent = message;
+
+            toast.classList.add("show");
+
+            clearTimeout(toastTimer);
+
+            toastTimer = setTimeout(() => {
+
+                toast.classList.remove("show");
+
+            }, 3000);
+
+        }
+
+
+        /* =========================
+           ORDER FORM
+        ========================== */
+
+        const orderForm =
+            document.getElementById("orderForm");
+
+
+        orderForm.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const name =
+                document.getElementById("name").value.trim();
+
+            const phone =
+                document.getElementById("phone").value.trim();
+
+            const product =
+                document.getElementById("product").value;
+
+            const size =
+                document.getElementById("size").value;
+
+            const quantity =
+                document.getElementById("quantity").value;
+
+            const address =
+                document.getElementById("address").value.trim();
+
+
+            // Basic validation
+
+            if (
+                !name ||
+                !phone ||
+                !product ||
+                !size ||
+                !quantity ||
+                !address
+            ) {
+
+                showToast(
+                    "Please complete all required fields."
+                );
+
+                return;
+            }
+
+
+            // Create order summary
+
+            const orderMessage = `
+NEW THREADS ORDER
+
+Customer:
+${name}
+
+Phone:
+${phone}
+
+Product:
+${product}
+
+Size:
+${size}
+
+Quantity:
+${quantity}
+
+Delivery Address:
+${address}
+            `.trim();
+
+
+            /*
+                This is where you would normally send
+                the order to your backend.
+
+                For example:
+
+                fetch("/api/orders", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name,
+                        phone,
+                        product,
+                        size,
+                        quantity,
+                        address
+                    })
+                });
+            */
+
+
+            console.log(orderMessage);
+
+            showToast(
+                "Order received! We will contact you shortly."
+            );
+
+
+            orderForm.reset();
+
+            cartCount = 0;
+            cartCounter.textContent = cartCount;
+
+        });
+
+
+        /* =========================
+           CURRENT YEAR
+        ========================== */
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+
+        /* =========================
+           HEADER SHADOW ON SCROLL
+        ========================== */
+
+        window.addEventListener("scroll", () => {
+
+            const header =
+                document.querySelector("header");
+
+            if (window.scrollY > 30) {
+
+                header.style.boxShadow =
+                    "0 4px 20px rgba(0,0,0,0.08)";
+
+            } else {
+
+                header.style.boxShadow = "none";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
