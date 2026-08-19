@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Bloom | Birthday Event</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <!-- NAVBAR -->
+  <header class="topbar">
+
+    <a href="#" class="brand">
+      <span class="brand-mark">✦</span>
+      <span>Bloom<span class="brand-dot">.</span></span>
+    </a>
+
+    <nav>
+      <a href="#event">Event</a>
+      <a href="#register">Register</a>
+      <a href="#checkin">Check-in</a>
+
+      <button class="host-link" id="hostToggle">
+        Host Dashboard
+      </button>
+    </nav>
+
+  </header>
+
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="event">
+
+      <div class="hero-copy">
+
+        <div class="eyebrow">
+          <span></span>
+          YOU'RE INVITED
+        </div>
+
+        <h1>
+          A little more
+          <br>
+          <em>love</em>, a lot
+          <br>
+          more cake.
+        </h1>
+
+        <p class="hero-text">
+          Come celebrate Maya's 25th birthday with sweet treats,
+          warm hugs, good music and the people who make life beautiful.
+        </p>
+
+
+        <div class="event-meta">
+
+          <div>
+            <span class="meta-icon">♡</span>
+
+            <div>
+              <strong>Saturday, September 12</strong>
+              <small>2026 · 4:00 PM</small>
+            </div>
+          </div>
+
+
+          <div>
+            <span class="meta-icon">⌂</span>
+
+            <div>
+              <strong>The Buttercup Garden</strong>
+              <small>Warri, Delta State</small>
+            </div>
+          </div>
+
+        </div>
+
+
+        <a href="#register" class="primary-btn">
+          Reserve my seat
+          <span>→</span>
+        </a>
+
+      </div>
+
+
+      <!-- BIRTHDAY CARD -->
+      <div class="hero-card">
+
+        <div class="sun-disc"></div>
+
+        <div class="photo-placeholder">
+
+          <div class="flower flower-a">✿</div>
+          <div class="flower flower-b">✽</div>
+
+          <div class="cake-illustration">
+
+            <div class="candle">♢</div>
+
+            <div class="cake-top"></div>
+
+            <div class="cake-body">
+              <span>25</span>
+            </div>
+
+            <div class="plate"></div>
+
+          </div>
+
+        </div>
+
+        <div class="card-note">
+          made with <span>♥</span> & sunshine
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- REGISTRATION -->
+    <section class="section register-section" id="register">
+
+      <div class="section-heading">
+
+        <div>
+
+          <div class="eyebrow">
+            <span></span>
+            RSVP
+          </div>
+
+          <h2>Save your spot.</h2>
+
+        </div>
+
+        <p>
+          Registration takes less than a minute.
+          We'll keep your seat warm.
+        </p>
+
+      </div>
+
+
+      <div class="register-layout">
+
+
+        <!-- FORM -->
+        <form class="glass-form" id="registrationForm">
+
+          <div class="form-row">
+
+            <label>
+              First name
+
+              <input
+                id="firstName"
+                required
+                placeholder="Maya"
+              >
+            </label>
+
+
+            <label>
+              Last name
+
+              <input
+                id="lastName"
+                required
+                placeholder="Okafor"
+              >
+            </label>
+
+          </div>
+
+
+          <label>
+            Email address
+
+            <input
+              id="email"
+              type="email"
+              required
+              placeholder="you@example.com"
+            >
+          </label>
+
+
+          <div class="form-row">
+
+            <label>
+              Phone number
+
+              <input
+                id="phone"
+                type="tel"
+                required
+                placeholder="+234 800 000 0000"
+              >
+            </label>
+
+
+            <label>
+              Guests
+
+              <select id="guests">
+
+                <option value="1">
+                  Just me
+                </option>
+
+                <option value="2">
+                  Me + 1
+                </option>
+
+                <option value="3">
+                  Me + 2
+                </option>
+
+                <option value="4">
+                  Me + 3
+                </option>
+
+              </select>
+
+            </label>
+
+          </div>
+
+
+          <label>
+
+            Anything we should know?
+            <span class="optional">(optional)</span>
+
+            <textarea
+              id="note"
+              rows="3"
+              placeholder="Dietary needs, accessibility, birthday message..."
+            ></textarea>
+
+          </label>
+
+
+          <label class="check-label">
+
+            <input
+              type="checkbox"
+              id="updates"
+            >
+
+            <span>
+              Send me event updates and reminders.
+            </span>
+
+          </label>
+
+
+          <button
+            class="primary-btn full"
+            type="submit"
+          >
+            Complete registration
+            <span>→</span>
+          </button>
+
+
+          <p
+            class="form-message"
+            id="formMessage"
+          ></p>
+
+        </form>
+
+
+
+        <!-- DIGITAL TICKET -->
+        <aside class="ticket-preview">
+
+          <div class="ticket-top">
+
+            <span class="mini-logo">
+              ✦ Bloom.
+            </span>
+
+            <span>
+              RSVP PASS
+            </span>
+
+          </div>
+
+
+          <div class="ticket-content">
+
+            <small>
+              YOU'RE JOINING
+            </small>
+
+            <h3>
+              Maya's
+              <br>
+              25th Birthday
+            </h3>
+
+
+            <div class="ticket-details">
+
+              <span>
+                12 SEP 2026
+              </span>
+
+              <span>
+                4:00 PM
+              </span>
+
+            </div>
+
+
+            <div class="ticket-dashed"></div>
+
+
+            <p>
+              Your digital pass appears here after registration.
+            </p>
+
+
+            <div class="fake-qr">
+              <span>▦</span>
+            </div>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- CHECK IN -->
+    <section
+      class="section checkin-section"
+      id="checkin"
+    >
+
+      <div class="section-heading centered">
+
+        <div class="eyebrow">
+          <span></span>
+          ARRIVAL
+        </div>
+
+        <h2>
+          Check in. Feel at home.
+        </h2>
+
+        <p>
+          Hosts can quickly verify guests using their confirmation code.
+        </p>
+
+      </div>
+
+
+      <div class="checkin-box">
+
+        <div class="checkin-icon">
+          ✓
+        </div>
+
+        <h3>
+          Ready when you are.
+        </h3>
+
+        <p>
+          Enter the confirmation code from your RSVP.
+        </p>
+
+
+        <div class="checkin-input">
+
+          <input
+            id="checkinCode"
+            placeholder="e.g. BLOOM-4821"
+          >
+
+          <button id="checkinBtn">
+            Check in
+          </button>
+
+        </div>
+
+
+        <div
+          id="checkinResult"
+          class="checkin-result"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- HOST DASHBOARD -->
+    <section
+      class="host-panel section"
+      id="hostPanel"
+    >
+
+      <div class="section-heading">
+
+        <div>
+
+          <div class="eyebrow">
+            <span></span>
+            HOST VIEW
+          </div>
+
+          <h2>
+            Event control room.
+          </h2>
+
+        </div>
+
+
+        <button
+          class="secondary-btn"
+          id="closeHost"
+        >
+          Close dashboard
+        </button>
+
+      </div>
+
+
+      <!-- STATISTICS -->
+      <div class="stats">
+
+        <div class="stat-card">
+
+          <span>
+            Registered
+          </span>
+
+          <strong id="registeredCount">
+            0
+          </strong>
+
+          <small>
+            attendees
+          </small>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <span>
+            Checked in
+          </span>
+
+          <strong id="checkedInCount">
+            0
+          </strong>
+
+          <small>
+            arrivals
+          </small>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <span>
+            Seats remaining
+          </span>
+
+          <strong id="remainingCount">
+            120
+          </strong>
+
+          <small>
+            of 120
+          </small>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <span>
+            Attendance
+          </span>
+
+          <strong id="attendanceRate">
+            0%
+          </strong>
+
+          <small>
+            checked in
+          </small>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- GUEST TABLE -->
+      <div class="guest-table-wrap">
+
+        <div class="table-head">
+
+          <h3>
+            Guest list
+          </h3>
+
+          <input
+            id="guestSearch"
+            placeholder="Search guests..."
+          >
+
+        </div>
+
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Guest
+              </th>
+
+              <th>
+                Contact
+              </th>
+
+              <th>
+                Guests
+              </th>
+
+              <th>
+                Code
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th>
+                Action
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="guestTable"></tbody>
+
+        </table>
+
+
+        <div
+          class="empty-state"
+          id="emptyState"
+        >
+          No registrations yet.
+          Your guest list will appear here.
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <span>
+      Bloom. Event experience
+    </span>
+
+    <span>
+      Made for moments worth remembering ✦
+    </span>
+
+  </footer>
+
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
