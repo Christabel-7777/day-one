@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NaijaBite — Fresh Food Delivered</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="container nav">
+
+            <a href="#" class="logo">
+                <span class="logo-icon">🥑</span>
+                Naija<span>Bite</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#categories">Categories</a>
+                <a href="#products">Shop</a>
+                <a href="#about">About</a>
+            </nav>
+
+            <div class="nav-actions">
+
+                <button class="icon-btn search-btn" onclick="focusSearch()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+                <button class="cart-btn" onclick="openCart()">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    <b id="cartCount">0</b>
+                </button>
+
+                <button class="menu-btn" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <main>
+
+        <section class="hero" id="home">
+
+            <div class="container hero-content">
+
+                <div class="hero-text">
+
+                    <div class="small-badge">
+                        <span>🔥</span>
+                        Freshness delivered daily
+                    </div>
+
+                    <h1>
+                        Good food.
+                        <br>
+                        <em>Good mood.</em>
+                    </h1>
+
+                    <p>
+                        Shop fresh groceries, delicious meals and everyday
+                        food essentials — all in one place.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#products" class="primary-btn">
+                            Shop Now
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                        <a href="#categories" class="secondary-btn">
+                            Explore Categories
+                        </a>
+                    </div>
+
+                    <div class="hero-info">
+
+                        <div class="info-item">
+                            <strong>10k+</strong>
+                            <span>Happy customers</span>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="info-item">
+                            <strong>30 min</strong>
+                            <span>Average delivery</span>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="info-item">
+                            <strong>100%</strong>
+                            <span>Fresh products</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-image">
+
+                    <div class="hero-circle"></div>
+
+                    <div class="floating-card card-one">
+                        <span>🥬</span>
+                        <div>
+                            <strong>Farm Fresh</strong>
+                            <small>Delivered today</small>
+                        </div>
+                    </div>
+
+                    <div class="floating-card card-two">
+                        <span>⭐</span>
+                        <div>
+                            <strong>4.9/5</strong>
+                            <small>Customer rating</small>
+                        </div>
+                    </div>
+
+                    <div class="food-emoji">🍲</div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CATEGORIES ================= -->
+
+        <section class="categories section" id="categories">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="eyebrow">SHOP BY CATEGORY</span>
+                        <h2>What are you craving?</h2>
+                    </div>
+
+                    <p>
+                        Everything you need for your kitchen and your table.
+                    </p>
+
+                </div>
+
+                <div class="category-grid">
+
+                    <button class="category-card active" onclick="filterProducts('all', this)">
+                        <div class="category-icon green">🛒</div>
+                        <strong>All</strong>
+                        <span>Everything</span>
+                    </button>
+
+                    <button class="category-card" onclick="filterProducts('groceries', this)">
+                        <div class="category-icon yellow">🥬</div>
+                        <strong>Groceries</strong>
+                        <span>Fresh produce</span>
+                    </button>
+
+                    <button class="category-card" onclick="filterProducts('meals', this)">
+                        <div class="category-icon orange">🍲</div>
+                        <strong>Local Meals</strong>
+                        <span>Ready to eat</span>
+                    </button>
+
+                    <button class="category-card" onclick="filterProducts('drinks', this)">
+                        <div class="category-icon blue">🥤</div>
+                        <strong>Drinks</strong>
+                        <span>Cool & refreshing</span>
+                    </button>
+
+                    <button class="category-card" onclick="filterProducts('snacks', this)">
+                        <div class="category-icon pink">🍪</div>
+                        <strong>Snacks</strong>
+                        <span>Sweet & crunchy</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PRODUCTS ================= -->
+
+        <section class="products section" id="products">
+
+            <div class="container">
+
+                <div class="section-heading products-heading">
+
+                    <div>
+                        <span class="eyebrow">OUR COLLECTION</span>
+                        <h2>Fresh from our kitchen</h2>
+                    </div>
+
+                    <div class="search-wrapper">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search food..."
+                            oninput="searchProducts()"
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="product-grid" id="productGrid"></div>
+
+                <div class="empty-state" id="emptyState">
+                    <span>😕</span>
+                    <h3>No food found</h3>
+                    <p>Try searching for something else.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PROMO ================= -->
+
+        <section class="promo section">
+
+            <div class="container">
+
+                <div class="promo-box">
+
+                    <div class="promo-text">
+
+                        <span class="eyebrow">TODAY'S SPECIAL</span>
+
+                        <h2>
+                            Get 15% off your
+                            <br>
+                            first order!
+                        </h2>
+
+                        <p>
+                            Use code <strong>NAIJABITE15</strong> at checkout.
+                        </p>
+
+                        <button class="white-btn" onclick="showPromo()">
+                            Get the deal
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="promo-food">
+                        🍛
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ABOUT ================= -->
+
+        <section class="about section" id="about">
+
+            <div class="container about-grid">
+
+                <div class="about-image">
+                    <div class="about-emoji">👨🏾‍🍳</div>
+                </div>
+
+                <div class="about-text">
+
+                    <span class="eyebrow">WHY NAIJABITE?</span>
+
+                    <h2>
+                        Food made simple,
+                        <em>just for you.</em>
+                    </h2>
+
+                    <p>
+                        From farm-fresh vegetables to your favourite Nigerian
+                        meals, NaijaBite makes it easy to get quality food
+                        delivered straight to your doorstep.
+                    </p>
+
+                    <div class="features">
+
+                        <div class="feature">
+                            <span>🌱</span>
+                            <div>
+                                <strong>Fresh ingredients</strong>
+                                <p>We carefully select quality ingredients.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature">
+                            <span>🚚</span>
+                            <div>
+                                <strong>Fast delivery</strong>
+                                <p>Your food arrives fresh and on time.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature">
+                            <span>💳</span>
+                            <div>
+                                <strong>Easy payment</strong>
+                                <p>Simple and secure checkout.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="container footer-grid">
+
+            <div>
+                <a href="#" class="logo footer-logo">
+                    <span class="logo-icon">🥑</span>
+                    Naija<span>Bite</span>
+                </a>
+
+                <p>
+                    Fresh food, groceries and happiness delivered to your door.
+                </p>
+
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Shop</h4>
+                <a href="#products">All Products</a>
+                <a href="#categories">Groceries</a>
+                <a href="#categories">Local Meals</a>
+                <a href="#categories">Drinks</a>
+            </div>
+
+            <div>
+                <h4>Company</h4>
+                <a href="#about">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Careers</a>
+                <a href="#">FAQs</a>
+            </div>
+
+            <div>
+                <h4>Contact</h4>
+                <p>📍 Lagos, Nigeria</p>
+                <p>📞 +234 800 123 4567</p>
+                <p>✉️ hello@naijabite.com</p>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 NaijaBite. Made with ❤️ in Nigeria.</p>
+        </div>
+
+    </footer>
+
+
+    <!-- ================= CART ================= -->
+
+    <div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+    <aside class="cart-sidebar" id="cartSidebar">
+
+        <div class="cart-header">
+            <div>
+                <span class="eyebrow">YOUR ORDER</span>
+                <h2>Your Cart</h2>
+            </div>
+
+            <button onclick="closeCart()" class="close-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="cart-items" id="cartItems"></div>
+
+        <div class="cart-empty" id="cartEmpty">
+            <div>🛍️</div>
+            <h3>Your cart is empty</h3>
+            <p>Add something delicious!</p>
+        </div>
+
+        <div class="cart-bottom">
+
+            <div class="subtotal">
+                <span>Subtotal</span>
+                <strong id="cartTotal">₦0</strong>
+            </div>
+
+            <button class="checkout-btn" onclick="checkout()">
+                Checkout
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= CHECKOUT MODAL ================= -->
+
+    <div class="modal-overlay" id="checkoutModal">
+
+        <div class="checkout-modal">
+
+            <button class="modal-close" onclick="closeCheckout()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="checkout-icon">🎉</div>
+
+            <h2>Ready to order?</h2>
+
+            <p>
+                Your order is almost on its way!
+                This demo checkout is ready to connect to a real payment system.
+            </p>
+
+            <div class="order-summary">
+                <span>Total</span>
+                <strong id="checkoutTotal">₦0</strong>
+            </div>
+
+            <button class="primary-btn full-btn" onclick="placeOrder()">
+                Place Order
+                <i class="fa-solid fa-check"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TOAST ================= -->
+
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Added to cart!</span>
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
